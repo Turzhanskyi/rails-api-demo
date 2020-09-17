@@ -5,7 +5,7 @@ module Api
     class PostsController < ApplicationController
       include ActionController::HttpAuthentication::Token::ControllerMethods
 
-      before_action :authenticate, only: %i[create]
+      before_action :authenticate, only: %i[create destroy]
 
       def index
         @posts = Post.order('created_at DESC')
@@ -19,6 +19,15 @@ module Api
           render json: @post, status: :created
         else
           render json: @post.errors, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        @post = @user.posts.find_by(params[:id])
+        if @post
+          @post.destroy
+        else
+          render json: { post: 'not found' }, status: :not_found
         end
       end
 
