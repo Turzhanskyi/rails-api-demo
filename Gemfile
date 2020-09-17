@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'rack-attack', '~> 6.3', '>= 6.3.1'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 gem 'rubocop', '0.89.1', require: false
 gem 'rubocop-rails', '2.7.1', require: false
