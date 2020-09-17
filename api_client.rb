@@ -16,5 +16,4 @@ end
 puts Oj.load(response.body)
 puts response.status
 
-
 # run script: ruby api_client.rb
