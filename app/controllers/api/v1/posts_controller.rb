@@ -5,12 +5,21 @@ module Api
     class PostsController < ApplicationController
       include ActionController::HttpAuthentication::Token::ControllerMethods
 
-      before_action :authenticate, only: %i[create destroy]
+      before_action :authenticate, only: %i[create]
 
       def index
         @posts = Post.order('created_at DESC')
 
         render json: @posts
+      end
+
+      def create
+        @post = @user.posts.new(post_params)
+        if @post.save
+          render json: @post, status: :created
+        else
+          render json: @post.errors, status: :unprocessable_entity
+        end
       end
 
       private
@@ -19,6 +28,10 @@ module Api
         authenticate_or_request_with_http_token do |token, _options|
           @user = User.find_by(token: token)
         end
+      end
+
+      def post_params
+        params.require(:post).permit(:title, :body, :user_id)
       end
     end
   end
